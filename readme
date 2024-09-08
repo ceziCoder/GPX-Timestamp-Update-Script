@@ -1,0 +1,66 @@
+# GPX Timestamp Update Script
+
+## Overview
+This Python script updates the timestamps in a GPX file, allowing you to adjust the start time of an activity to a new specified time. The script reads an input GPX file, calculates the difference between the original start time and the new start time, and updates all the timestamps in the GPX file accordingly. The updated GPX file is then saved with the new timestamps.
+
+## Requirements
+
+1. **Python 3.x**
+2. **gpxpy**: A Python library for parsing and manipulating GPX files.
+3. **pytz**: A library for working with timezones.
+
+You can install the required dependencies by running:
+```bash
+pip install gpxpy pytz
+```
+
+## How to Use
+
+1. Clone or download the script into your working directory.
+2. Make sure you have a GPX file that you want to modify (e.g., `Afternoon_Ride.gpx`).
+3. Modify the variables `input_gpx`, `output_gpx`, and `new_start_time` in the script:
+   - `input_gpx`: The path to the input GPX file.
+   - `output_gpx`: The path where the modified GPX file will be saved.
+   - `new_start_time`: The desired new start time, defined as a Python `datetime` object.
+4. You can specify the timezone for the new start time using the `pytz` library.
+5. Run the script using Python:
+   ```bash
+   python3 main.py
+   ```
+
+### Example
+The script includes an example that changes the start time of a GPX file to **15:12 (3:12 PM)** on **September 7, 2024**, in the **Europe/Warsaw** timezone. You can modify this example as per your needs.
+
+## Script Details
+
+### `update_gpx_timestamps(input_file, output_file, new_start_time)`
+
+- **`input_file`**: The GPX file you want to modify.
+- **`output_file`**: The file where the updated GPX data will be saved.
+- **`new_start_time`**: The new desired start time for the GPX track points (must be a `datetime` object with timezone information).
+
+The function:
+1. Reads the input GPX file.
+2. Calculates the time difference between the original start time and the new start time.
+3. Adjusts all the timestamps in the GPX file by this time difference.
+4. Writes the updated GPX file to the specified output location.
+
+### Example Use in the Script:
+```python
+if __name__ == "__main__":
+    input_gpx = "Afternoon_Ride.gpx"
+    output_gpx = "output.gpx"
+    new_start_time = datetime(2024, 9, 7, 15, 12, 0)
+
+    timezone = pytz.timezone("Europe/Warsaw")
+    new_start_time = timezone.localize(new_start_time)
+
+    update_gpx_timestamps(input_gpx, output_gpx, new_start_time)
+```
+
+This example reads the GPX file `Afternoon_Ride.gpx`, updates the timestamps to start at 15:12 (3:12 PM) on September 7, 2024, and saves the updated GPX data to `output.gpx`.
+
+## Notes
+
+- Ensure the GPX file you use contains valid track and timestamp information.
+- The script only updates the timestamps and does not modify any other data (e.g., track points, elevation, etc.).
